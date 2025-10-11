@@ -1,0 +1,98 @@
+===============================
+🌟 GRAMMAIRES CONTEXT-FREES 🌟
+===============================
+
+📘 1) Langage : L = { a^n b^n | n ≥ 0 }
+
+T = {a, b}
+N = {S}
+R = {
+   S → a S b | ε
+}
+
+📝 Chaque 'a' est équilibré avec un 'b'.
+
+
+--------------------------------------------
+
+📗 2) Langage : L = { a^n b^m | n, m ≥ 0 }
+
+T = {a, b}
+N = {S, X}
+R = {
+   S → a S | X,
+   X → b X | ε
+}
+
+📝 Les 'a' viennent d’abord, puis les 'b'.
+
+
+--------------------------------------------
+
+📙 3) Langage : L = { a^n b^m c^m | n, m ≥ 0 }
+
+T = {a, b, c}
+N = {S, X}
+R = {
+   S → a S | X,
+   X → b X c | ε
+}
+
+📝 Les 'a' sont indépendants, mais les 'b' et 'c' sont équilibrés.
+
+
+--------------------------------------------
+
+📒 4) Langage : L = { a^n b^m c^{2m} | n, m ≥ 0 }
+
+T = {a, b, c}
+N = {S, X}
+R = {
+   S → a S | X,
+   X → b X c c | ε
+}
+
+📝 Pour chaque 'b', on ajoute deux 'c'. 
+Exemple : aabbbcccccc.
+
+
+--------------------------------------------
+
+📘 5) Langage : L = { 0^{2n} 1^n | n ≥ 0 }
+
+T = {0, 1}
+N = {S}
+R = {
+   S → 00 S 1 | ε
+}
+
+📝 Chaque '1' correspond à deux '0'.
+
+
+--------------------------------------------
+
+📗 6) Langage : L = { a^n b^m c^n | n, m ≥ 0 }
+
+T = {a, b, c}
+N = {S, X}
+R = {
+   S → a S c | X,
+   X → b X | ε
+}
+
+📝 Le nombre de 'a' = le nombre de 'c', avec les 'b' au milieu.
+
+
+--------------------------------------------
+
+🚫 7) Langage impossible en CFG :
+L = { a^n b^m c^n d^m | n, m ≥ 0 }
+
+🧠 Ce langage n’est pas indépendant du contexte :
+il exige deux dépendances croisées (entre a/c et b/d),
+ce qu’une grammaire CFG ne peut pas gérer.
+
+
+===============================
+✨ FIN DU DOCUMENT ✨
+===============================
