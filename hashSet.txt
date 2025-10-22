@@ -1,6 +1,6 @@
 /*
 💡 Title: How HashSet Achieves O(1) Lookup in Java 🚀
-📘 Author: Gaith Nahdi
+📘 Author: Gaith Nahdi 
 📅 Date: October 2025
 
 ---
