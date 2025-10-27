@@ -1,0 +1,152 @@
+# 🌐 Multi-Server Communication with Node.js & Redis
+
+## 🚀 Overview
+
+هذا المشروع يوضح كيفية جعل **عدة سيرفرات Node.js تتحدث مع بعضها** باستخدام **Redis Pub/Sub**.  
+يمكنك استخدام هذه الفكرة لاحقًا مع **Mediasoup** لبناء نظام بث مباشر عالمي (مثل Discord أو Zoom) باستخدام **Edge Nodes** و **Routing ذكي حسب الموقع الجغرافي**.
+
+---
+
+## 🧩 Concepts
+
+### 1. Redis Pub/Sub
+- **Publish**: السيرفر يرسل رسالة للقناة.
+- **Subscribe**: السيرفر يستمع للقناة ويستقبل كل الرسائل.
+
+### 2. Edge Nodes
+- هي سيرفرات قريبة من المستخدم النهائي لتقليل **latency**.
+- كل منطقة جغرافية لها Edge Node خاص بها.
+
+### 3. Routing الذكي
+- كل مستخدم يتصل بأقرب Edge Node.
+- Edge Nodes تتواصل مع السيرفر الرئيسي لتنسيق الاتصالات.
+
+### 4. Latency
+- التأخير بين إرسال البيانات واستقبالها.
+- تقليل المسافة الجغرافية يقلل الـ latency.
+
+---
+
+## 🛠️ Requirements
+
+- Node.js >= 18
+- Redis (محلي أو Cloud)
+- Terminal أو VSCode لتشغيل أكثر من سيرفر
+
+---
+
+## 📁 Project Structure
+
+/multi-server-chat
+├── serverA.js # تمثل Edge Node في تونس
+├── serverB.js # تمثل Edge Node في أمريكا
+└── serverC.js # تمثل Edge Node في أوروبا
+
+
+---
+
+## ⚡ Server Code Example
+
+### serverA.js
+```js
+import { createClient } from "redis";
+
+const pub = createClient();
+const sub = createClient();
+
+await pub.connect();
+await sub.connect();
+
+await sub.subscribe("global-channel", (message) => {
+  console.log("📩 [A] Received:", message);
+});
+
+setInterval(async () => {
+  const msg = `Hello from Server A 🇹🇳 at ${new Date().toLocaleTimeString()}`;
+  await pub.publish("global-channel", msg);
+  console.log("📤 [A] Sent message");
+}, 5000);
+
+
+serverB.js
+import { createClient } from "redis";
+
+const pub = createClient();
+const sub = createClient();
+
+await pub.connect();
+await sub.connect();
+
+await sub.subscribe("global-channel", (message) => {
+  console.log("📩 [B] Received:", message);
+});
+
+setInterval(async () => {
+  const msg = `Hello from Server B 🇺🇸 at ${new Date().toLocaleTimeString()}`;
+  await pub.publish("global-channel", msg);
+  console.log("📤 [B] Sent message");
+}, 7000);
+
+
+serverC.js
+import { createClient } from "redis";
+
+const pub = createClient();
+const sub = createClient();
+
+await pub.connect();
+await sub.connect();
+
+await sub.subscribe("global-channel", (message) => {
+  console.log("📩 [C] Received:", message);
+});
+
+setInterval(async () => {
+  const msg = `Hello from Server C 🇪🇺 at ${new Date().toLocaleTimeString()}`;
+  await pub.publish("global-channel", msg);
+  console.log("📤 [C] Sent message");
+}, 9000);
+
+
+🔄 How It Works
+
+كل سيرفر ينشئ Pub client و Sub client للاتصال بـ Redis.
+
+كل سيرفر يرسل رسائل للقناة المشتركة (global-channel).
+
+كل سيرفر يستقبل الرسائل من السيرفرات الأخرى تلقائيًا.
+
+يمكنك محاكاة Edge Nodes لمناطق مختلفة عبر تشغيل السيرفرات على نفس جهازك أو سيرفرات مختلفة.
+
+🧠 Next Steps for Study
+
+تعلم Mediasoup basic setup:
+
+Router, Transport, Producer, Consumer
+
+اربط Edge Nodes باستخدام Redis Pub/Sub كما في المثال.
+
+أضف React front-end لبث واستقبال الفيديو والصوت.
+
+جرب Routing ذكي حسب الجغرافيا لتقليل الـ latency.
+
+لاحقًا، استخدم CDN لتوزيع الملفات الثابتة وتقليل زمن التحميل.
+
+💡 Tips from Developer to Developer
+
+لا تقرأ كل توثيق Mediasoup دفعة واحدة.
+
+ابدأ من مثال عملي (مثل هذا المشروع) ثم ارجع للتوثيق عند الحاجة.
+
+ركز على فهم الفكرة العامة للبنية أكثر من حفظ الكود عن ظهر قلب.
+
+كل خطوة عملية تثبت المفهوم أفضل من أي كتاب أو مقال.
+
+📌 References
+
+Mediasoup Documentation
+
+Redis Pub/Sub
+
+WebRTC Concepts
+Medium Tutorial: Streaming with WebRTC and Mediasoup
