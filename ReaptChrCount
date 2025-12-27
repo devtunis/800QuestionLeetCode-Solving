@@ -1,0 +1,18 @@
+t = {}
+g = "15544555"
+for i in range(len(g)):
+    if g[i] in t:
+        t[g[i]]=t[g[i]]+1
+    else:
+        t[g[i]] = 0
+print(t)
+
+
+t = {}
+g = "15544555"
+for i in g:
+    if i  in g:
+        t[i]=t[i]+1
+    else:
+        t[i] = 0
+print(t)
