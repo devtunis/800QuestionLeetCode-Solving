@@ -1,0 +1,13 @@
+-- 1. first 5
+SELECT *
+FROM EMPLOYES
+WHERE ROWNUM <= 5;
+
+-- 2. The employee with the highest salary
+SELECT *
+FROM (
+  SELECT *
+  FROM EMPLOYES
+  ORDER BY SALAIRE DESC
+)
+WHERE ROWNUM = 1;
